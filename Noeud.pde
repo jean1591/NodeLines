@@ -56,21 +56,11 @@ public class Noeud {
   }
 
   public void lierNoeudsProches(ArrayList<Noeud> noeuds) {
-    //for (Noeud n : noeuds) {
-    //  if (dist(this.xPos, this.yPos, n.getXPos(), n.getYPos()) <= 200) {
-    //    Trait t = new Trait(this.xPos, this.yPos, n.getXPos(), n.getYPos());
-    //    t.dessinerTrait();
-    //  }
-    //}
     for (Noeud n : noeuds) {
       if (dist(this.xPos, this.yPos, n.getXPos(), n.getYPos()) <= 200) {
-        traits.add(new Trait(this.xPos, this.yPos, n.getXPos(), n.getYPos()));
+        Trait t = new Trait(this.xPos, this.yPos, n.getXPos(), n.getYPos());
+        t.dessinerTrait();
       }
-    }
-    
-    for (Trait t: traits) {
-      // t.deplacerTrait(this, n);
-      t.dessinerTrait();
     }
   }
 
