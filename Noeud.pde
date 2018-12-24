@@ -12,7 +12,7 @@ public class Noeud {
   public Noeud(int noeudSize) {
     /*
      * Constructeur simple
-     * Les positions  et les deplacements sont aleatoires
+     * Les positions et les deplacements sont aleatoires
      */
     this.xPos = (int) random(10, 791);
     this.yPos = (int) random(10, 791);
@@ -22,10 +22,31 @@ public class Noeud {
 
     // Impossible d'avoir xDep ou yDep a 0
     while (this.xDep == 0) {
-      this.xDep = (int) random(-3, 4);
+      this.xDep = (int) random(-2, 3);
     }
     while (this.yDep == 0) {
-      this.yDep = (int) random(-3, 4);
+      this.yDep = (int) random(-2, 3);
+    }
+  }
+  
+    public Noeud(int xPos, int yPos, int noeudSize) {
+    /*
+     * Constructeur utilisateur
+     * Les positions sont définies par l'utilisateur
+     * Les deplacements sont aleatoires
+     */
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.xDep = 0;
+    this.yDep = 0;
+    this.noeudSize = noeudSize;
+
+    // Impossible d'avoir xDep ou yDep a 0
+    while (this.xDep == 0) {
+      this.xDep = (int) random(-2, 3);
+    }
+    while (this.yDep == 0) {
+      this.yDep = (int) random(-2, 3);
     }
   }
 
@@ -38,13 +59,17 @@ public class Noeud {
     return this.yPos;
   }
 
-  // Mutateur
+  // Mutateurs
   public void setXPos(int xDep) {
     this.xPos += xDep;
   }
 
   public void setYPos(int yDep) {
     this.yPos += yDep;
+  }
+
+  public void setNoeudSize() {
+    this.noeudSize = ELLIPSE_SIZE + (traits.size() * 4);
   }
 
   // Methodes
@@ -56,11 +81,14 @@ public class Noeud {
   }
 
   public void lierNoeudsProches(ArrayList<Noeud> noeuds) {
+    this.resetTraits();
     for (Noeud n : noeuds) {
-      if (dist(this.xPos, this.yPos, n.getXPos(), n.getYPos()) <= 200) {
-        Trait t = new Trait(this.xPos, this.yPos, n.getXPos(), n.getYPos());
+      if (dist(this.xPos, this.yPos, n.getXPos(), n.getYPos()) <= 300) {
+        Trait t = new Trait(this, n);
         t.dessinerTrait();
+        traits.add(t);
       }
+      this.setNoeudSize();
     }
   }
 
@@ -79,5 +107,17 @@ public class Noeud {
 
     this.setXPos(this.xDep);
     this.setYPos(this.yDep);
+  }
+
+  public boolean isEquals(Noeud n) {
+    return (this.xPos == n.getXPos() && this.yPos == n.getYPos());
+  }
+
+  public void resetTraits() {
+    this.traits.clear();
+  }
+  
+  public boolean contientPointeur() {
+    return (dist(this.xPos, this.yPos, mouseX, mouseY) <= this.noeudSize/2);
   }
 }
