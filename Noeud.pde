@@ -28,8 +28,8 @@ public class Noeud {
       this.yDep = (int) random(-2, 3);
     }
   }
-  
-    public Noeud(int xPos, int yPos, int noeudSize) {
+
+  public Noeud(int xPos, int yPos, int noeudSize) {
     /*
      * Constructeur utilisateur
      * Les positions sont définies par l'utilisateur
@@ -109,6 +109,11 @@ public class Noeud {
     this.setYPos(this.yDep);
   }
 
+  public void deplacerNoeud(int xPos, int yPos) {
+    this.xPos = xPos;
+    this.yPos = yPos;
+  }
+
   public boolean isEquals(Noeud n) {
     return (this.xPos == n.getXPos() && this.yPos == n.getYPos());
   }
@@ -116,7 +121,7 @@ public class Noeud {
   public void resetTraits() {
     this.traits.clear();
   }
-  
+
   public boolean contientPointeur() {
     return (dist(this.xPos, this.yPos, mouseX, mouseY) <= this.noeudSize/2);
   }

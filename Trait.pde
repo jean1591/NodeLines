@@ -61,18 +61,4 @@ public class Trait {
     stroke(255);
     line(this.xStart, this.yStart, this.xEnd, this.yEnd);
   }
-
-  public void deplacerTrait(Noeud nStart, Noeud nEnd) {
-    setXStart(nStart.getXPos());
-    setYStart(nStart.getYPos());
-    setXEnd(nEnd.getXPos());
-    setYEnd(nEnd.getYPos());
-  }
-
-  public boolean isEquals(Trait t) {
-    return (this.xStart == t.getXStart() &&
-      this.yStart == t.getYStart() &&
-      this.xEnd == t.getXEnd() &&
-      this.yEnd == t.getYStart());
-  }
 }

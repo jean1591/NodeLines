@@ -1,5 +1,4 @@
 
-// TODO: Drag'n Drop
 
 // Constantes
 int ELLIPSE_SIZE = 20;
@@ -7,6 +6,9 @@ int ELLIPSE_SIZE = 20;
 // 
 ArrayList<Noeud> noeuds = new ArrayList<Noeud>();
 
+// Variables deplacement
+boolean enMouvement = false;
+Noeud noeudSelec = null;
 
 public void setup() {
   size(800, 800);
@@ -54,10 +56,24 @@ public void deplacerNoeuds() {
 }
 
 public void mousePressed() {
+  // Click gauche
   // Si pression sur bouton gauche de la souris
   if (mouseButton == LEFT) {
-    noeuds.add(new Noeud(mouseX, mouseY, ELLIPSE_SIZE));
+    for (int i=noeuds.size()-1; i>=0; i--) {
+      Noeud n = noeuds.get(i);
+      // Suppression du Noeud si le pointeur est sur un Noeud
+      if (n.contientPointeur()) {
+        noeudSelec = n;
+        enMouvement = true;
+      }
+    }
+    // Ajout de Noeud
+    if (!enMouvement) {
+      noeuds.add(new Noeud(mouseX, mouseY, ELLIPSE_SIZE));
+    }
   }
+
+  // Click droit
   // Si pression sur bouton droit de la souris
   else if (mouseButton == RIGHT) {
     for (int i=noeuds.size()-1; i>=0; i--) {
@@ -68,10 +84,22 @@ public void mousePressed() {
       }
     }
   }
+
+  // Click central
   // Suppression de tous les objets Noeud si pression sur bouton central de la souris
   else if (mouseButton == CENTER) {
     resetNoeuds();
   }
+}
+
+public void mouseDragged() {
+  if (enMouvement) {
+    noeudSelec.deplacerNoeud(mouseX, mouseY);
+  }
+}
+
+public void mouseReleased() {
+  enMouvement = false;
 }
 
 public void resetNoeuds() {
